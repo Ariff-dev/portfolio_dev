@@ -46,6 +46,9 @@ const config: Config = {
         //Purple
         'purple-neon': '#FF00FF',
       },
+      container: {
+        center: true,
+      },
     },
   },
   plugins: [],
