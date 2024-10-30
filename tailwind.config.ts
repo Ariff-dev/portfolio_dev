@@ -18,6 +18,7 @@ const config: Config = {
         // Text Colors
         'primary-text-color': '#D4D4D4',
         'secondary-text-color': '#FFFFFF',
+        'irrelevant-text-color': '#444343',
 
         //! Colors Neon
 
