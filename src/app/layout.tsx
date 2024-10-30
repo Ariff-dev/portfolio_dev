@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { JetBrains_Mono } from 'next/font/google'
-import './globals.css'
 import { Navbar } from '@/common/components/ui'
+import './globals.css'
 
 const fontFamily = JetBrains_Mono({
   subsets: ['latin'],
@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`${fontFamily.className} text-primary-text-color lg:container m-4 bg-page-background antialiased`}
+        className={`${fontFamily.className} lg:container m-4 text-primary-text-color bg-page-background antialiased`}
       >
         <Navbar />
         {children}
