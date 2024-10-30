@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { CarouselLanguages } from './components'
+import { DownLoadCV } from './components/DownLoadCV'
 
 export default function Home() {
   return (
@@ -49,6 +50,7 @@ export default function Home() {
         </p>
         <span className='text-pink-neon text-ms text-end'>{'</p>'}</span>
         <CarouselLanguages />
+        <DownLoadCV />
       </section>
     </main>
   )
