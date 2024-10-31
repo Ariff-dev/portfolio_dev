@@ -80,7 +80,7 @@ export default function Home() {
           </div>
         ))}
       </section>
-      <section className='bg-section-background rounded-lg border-2 border-border-section flex flex-col items-center justify-center gap-2'>
+      <section className='bg-section-background rounded-lg border-2 border-border-section flex flex-col items-center justify-center gap-2 p-4'>
         <h3 className='bg-gradient-to-r from-blue-neon to-blue-neon-contrast bg-clip-text text-transparent text-lg font-bold text-center'>
           Habilidades
         </h3>
@@ -88,9 +88,12 @@ export default function Home() {
           Diseñando <span className='text-blue-neon'>soluciones</span>{' '}
           personalizadas sobre tus requerimientos
         </p>
-        <div className='flex flex-col gap-6 p-4'>
+        <div className='flex flex-col gap-6 '>
           {skills.map((skill) => (
-            <div key={skill.title} className='p-4 border border-border-section'>
+            <div
+              key={skill.id}
+              className='p-4 border border-border-section flex flex-col justify-center gap-2 min-h-[250px] rounded-md '
+            >
               {skill.icon}
               {skill.title}
               {skill.description}
