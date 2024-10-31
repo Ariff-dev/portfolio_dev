@@ -60,18 +60,20 @@ export const CarouselLanguages = () => {
   const translateX = -((currentIndex % languages.length) * (100 / visibleCount))
 
   return (
-    <div className='flex wrap items-center p-4 gap-2'>
+    <div className='flex wrap items-center p-4 gap-2 lg:w-3/5'>
       <div className='w-3/5 overflow-hidden'>
         <div
-          className='flex transition-transform duration-500'
+          className='flex  transition-transform duration-500'
           style={{ transform: `translateX(${translateX}%)` }}
         >
           {duplicatedLanguages.map((language, index) => (
             <div
               key={`${language.title}-${index}`} // Combina el título con el índice para una clave única
-              className='p-4 flex-shrink-0 w-1/3 border border-border-section'
+              className='p-2 flex-shrink-0  w-1/3 border border-border-section'
             >
-              {language.icon}
+              <div className='flex items-center justify-center'>
+                {language.icon}
+              </div>
             </div>
           ))}
         </div>
