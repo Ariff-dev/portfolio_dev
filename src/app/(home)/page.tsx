@@ -1,9 +1,9 @@
 import Image from 'next/image'
-import { CarouselLanguages } from './components'
-import { DownLoadCV } from './components/DownLoadCV'
 
 import { PlusCircle } from 'iconoir-react'
-import { funnyFacts, skills } from './data'
+import { experienceData, educationData, funnyFacts, skills } from './data'
+import { CarouselLanguages, DownLoadCV, FormData, Timeline } from './components'
+import { Footer } from '@/common/components/ui'
 
 export default function Home() {
   return (
@@ -61,7 +61,7 @@ export default function Home() {
           <DownLoadCV />
         </div>
       </section>
-      <section className='bg-section-background rounded-lg border-2 border-border-section flex flex-col lg:flex-row lg:justify-around p-6 gap-10'>
+      <section className='bg-section-background rounded-lg border-2 border-border-section flex flex-col  lg:flex-row lg:justify-around p-6 gap-10'>
         {funnyFacts.map((fact) => (
           <div
             key={fact.description}
@@ -80,7 +80,7 @@ export default function Home() {
           </div>
         ))}
       </section>
-      <section className='bg-section-background rounded-lg border-2 border-border-section flex flex-col items-center justify-center gap-2 p-4'>
+      <section className='bg-section-background rounded-lg border-2 border-border-section flex flex-col items-center justify-center gap-2 lg:gap-4  p-4 lg:p-6 '>
         <h3 className='bg-gradient-to-r from-blue-neon to-blue-neon-contrast bg-clip-text text-transparent text-lg font-bold text-center'>
           Habilidades
         </h3>
@@ -88,7 +88,7 @@ export default function Home() {
           Diseñando <span className='text-blue-neon'>soluciones</span>{' '}
           personalizadas sobre tus requerimientos
         </p>
-        <div className='flex flex-col gap-6 '>
+        <div className='flex flex-col gap-4 lg:grid lg:grid-cols-3 lg:gap-6'>
           {skills.map((skill) => (
             <div
               key={skill.id}
@@ -101,6 +101,22 @@ export default function Home() {
           ))}
         </div>
       </section>
+      <section className='flex flex-col lg:flex-row gap-4'>
+        <div className=' bg-section-background rounded-lg border-2 border-border-section flex flex-col gap-4 justify-center items-center p-4'>
+          <p className='bg-gradient-to-r from-blue-neon to-blue-neon-contrast bg-clip-text text-transparent'>
+            Educación
+          </p>
+          <Timeline data={educationData} />
+        </div>
+        <div className='bg-section-background rounded-lg border-2 border-border-section flex flex-col gap-4 justify-center items-center p-4'>
+          <p className='bg-gradient-to-r from-blue-neon to-blue-neon-contrast bg-clip-text text-transparent'>
+            Experiencia
+          </p>
+          <Timeline data={experienceData} />
+        </div>
+      </section>
+      <FormData />
+      <Footer />
     </main>
   )
 }

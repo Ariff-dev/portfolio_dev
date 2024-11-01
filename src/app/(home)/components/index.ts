@@ -1,3 +1,4 @@
-import { Code, PlusCircle, Github, UserLove } from 'iconoir-react'
-
-export { CarouselLanguages } from './CarouselLanguages'
+export * from './CarouselLanguages'
+export * from './DownLoadCV'
+export * from './TimeLine'
+export * from './FormData'
