@@ -1,8 +1,8 @@
-import React from 'react'
+import { CategoryGallery } from './components/CategoryGallery'
 
-const token = process.env.NEXT_PUBLIC_TOKEN
-console.log('token:', token)
 async function page() {
+  const token = `${process.env.NEXT_PUBLIC_TOKEN}`
+
   const posts = await fetch('http://localhost:1337/api/posts', {
     method: 'GET',
     headers: {
@@ -11,9 +11,12 @@ async function page() {
     },
   })
   const data = await posts.json()
-  console.log(data)
 
-  return <div>Holi</div>
+  return (
+    <main>
+      <CategoryGallery />
+    </main>
+  )
 }
 
 export default page
