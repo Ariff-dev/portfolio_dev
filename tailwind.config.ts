@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss'
+import typography from '@tailwindcss/typography' // Cambiar require() a import
 
 const config: Config = {
   content: [
@@ -30,7 +31,7 @@ const config: Config = {
         'orange-neon': '#FF7300',
         'orange-neon-contrast': '#994500',
 
-        //Yellow
+        // Yellow
         'yellow-neon': '#E6ED07',
         'yellow-neon-contrast': '#838704',
 
@@ -45,7 +46,7 @@ const config: Config = {
         // Pink
         'pink-neon': '#FF1493',
 
-        //Purple
+        // Purple
         'purple-neon': '#FF00FF',
       },
       fontSize: {
@@ -57,6 +58,9 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    typography, // Usamos la importación de tipo 'import'
+  ],
 }
+
 export default config
