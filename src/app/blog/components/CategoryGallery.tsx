@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 export const CategoryGallery = async () => {
   const URL = `${process.env.NEXT_PUBLIC_URL}`
@@ -14,9 +15,10 @@ export const CategoryGallery = async () => {
 
   const categoriesData = await categories.json()
   const { data } = categoriesData
+  console.log(data)
   return (
     <div className='grid grid-cols-1 gap-4  lg:grid-cols-4'>
-      {data.map(({ id, name, image, color }) => (
+      {data.map(({ id, name, image, color, slug }) => (
         <div
           key={id}
           className='relative w-full h-32 border-2 border-border-section rounded-lg'
@@ -30,13 +32,14 @@ export const CategoryGallery = async () => {
           />
 
           <div className='absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 rounded-lg' />
-
-          <p
-            className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-lg font-bold'
-            style={{ color: color }}
-          >
-            {name}
-          </p>
+          <Link href={`/blog/category/${slug}`}>
+            <p
+              className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-lg font-bold'
+              style={{ color: color }}
+            >
+              {name}
+            </p>
+          </Link>
         </div>
       ))}
     </div>

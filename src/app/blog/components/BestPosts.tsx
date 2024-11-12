@@ -55,7 +55,7 @@ export const BestPosts = async () => {
               <p className={`text-xs`}>{description}</p>
               <div>
                 <Link
-                  href={`/blog/${slug}`}
+                  href={`/blog/post/${slug}`}
                   className='flex gap-2 text-sm font-bold'
                 >
                   Seguir leyendo
