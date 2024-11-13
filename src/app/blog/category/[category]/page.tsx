@@ -49,7 +49,7 @@ const CategoryPage = () => {
     return <div>{error}</div>
   }
 
-  return <div>{category}</div> // Retornamos solo un div con "Hola"
+  return <div>{category}</div>
 }
 
 export default CategoryPage
