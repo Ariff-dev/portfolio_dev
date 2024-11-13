@@ -1,18 +1,7 @@
 import { BestPosts } from './components/BestPosts'
 import { CategoryGallery } from './components/CategoryGallery'
 
-async function page() {
-  const token = `${process.env.NEXT_PUBLIC_TOKEN}`
-
-  const posts = await fetch('http://localhost:1337/api/posts', {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
-  })
-  const data = await posts.json()
-
+function BlogPage() {
   return (
     <main className='grid grid-cols-1 gap-4 mt-4  lg:mt-8'>
       <div className='text-center'>
@@ -32,4 +21,4 @@ async function page() {
   )
 }
 
-export default page
+export default BlogPage

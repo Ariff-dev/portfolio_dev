@@ -1,8 +1,15 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import { CategoryCardProps } from '../../interfaces'
 
-export const CategoryCard = ({ id, name, image, color, slug }) => {
+export const CategoryCard = ({
+  id,
+  name,
+  image,
+  color,
+  slug,
+}: CategoryCardProps) => {
   return (
     <div
       key={id}
