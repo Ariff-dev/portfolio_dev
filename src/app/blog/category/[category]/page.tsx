@@ -2,10 +2,12 @@
 
 import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { PostCard } from '../../components/ui/PostCard'
+import { PostCardProps } from '../../interfaces' // Asegúrate de tener estas interfaces correctamente definidas
 
 const CategoryPage = () => {
   const { category } = useParams() // Accedemos al slug de la categoría desde la URL
-  const [categoryData, setCategoryData] = useState<any>(null)
+  const [categoryData, setCategoryData] = useState<CategoryData | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -18,7 +20,7 @@ const CategoryPage = () => {
         try {
           // Hacemos la solicitud para obtener la categoría con sus posts relacionados
           const response = await fetch(
-            `${URL}/api/categories?filters[slug]=${category}&populate=*`, // Asumimos que 'posts' es el campo que contiene los posts relacionados
+            `${URL}/api/categories?filters[slug]=${category}&populate=articles.cover`, // Aquí populamos también la imagen del artículo
             {
               method: 'GET',
               headers: {
@@ -49,7 +51,28 @@ const CategoryPage = () => {
     return <div>{error}</div>
   }
 
-  return <div>{category}</div>
+  return (
+    <div>
+      {categoryData?.articles?.map((article: PostCardProps) => {
+        const { id, title, cover, date, description, color, slug } = article
+        const post = {
+          id,
+          title,
+          cover,
+          date,
+          description,
+          color,
+          slug,
+        }
+
+        return (
+          <div key={slug}>
+            <PostCard {...post} category={categoryData} />
+          </div>
+        )
+      })}
+    </div>
+  )
 }
 
 export default CategoryPage

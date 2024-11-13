@@ -1,5 +1,3 @@
-// interfaces/index.ts
-
 export interface Cover {
   url: string
   name: string
@@ -11,7 +9,19 @@ export interface PostCardProps {
   color: string
   title: string
   date: string
-  category: { name: string } // Suponiendo que 'category' es un objeto con 'name'
+  category: { name: string }
   description: string
+  slug: string
+}
+
+export interface ImageData {
+  url: string
+}
+
+export interface CategoryCardProps {
+  id: number
+  name: string
+  image: ImageData
+  color: string
   slug: string
 }
