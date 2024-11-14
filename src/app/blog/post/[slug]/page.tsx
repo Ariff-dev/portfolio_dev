@@ -3,6 +3,7 @@ import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { marked } from 'marked'
+import { Footer } from '@/common/components/ui'
 
 const PostPage = () => {
   const { slug } = useParams()
@@ -53,6 +54,7 @@ const PostPage = () => {
         className='post-content prose prose-lg mx-auto prose-h1:text-white prose-p:text-primary-text-color'
         dangerouslySetInnerHTML={{ __html: articleHtml }}
       />
+      <Footer />
     </div>
   )
 }

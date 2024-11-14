@@ -4,6 +4,9 @@ import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { PostCard } from '../../components/ui/PostCard'
 import { PostCardProps } from '../../interfaces' // Asegúrate de tener estas interfaces correctamente definidas
+import { ArrowLeftCircle } from 'iconoir-react'
+import Link from 'next/link'
+import { Footer } from '@/common/components/ui'
 
 const CategoryPage = () => {
   const { category } = useParams() // Accedemos al slug de la categoría desde la URL
@@ -34,7 +37,7 @@ const CategoryPage = () => {
           setCategoryData(data.data[0]) // Asumimos que la categoría es la primera en la respuesta
           setIsLoading(false)
         } catch (err) {
-          setError('Error al cargar los datos de la categoría.')
+          setError('Error al cargar los datos de la categoría. ')
           setIsLoading(false)
         }
       }
@@ -52,7 +55,27 @@ const CategoryPage = () => {
   }
 
   return (
-    <div>
+    <div className='flex flex-col gap-4 mt-4'>
+      <div className='flex items-center justify-between'>
+        <h1
+          className={` lg:text-2xl text-xl font-bold`}
+          style={{ color: categoryData.color }}
+        >
+          {categoryData.name}
+        </h1>
+        <Link
+          href={'/blog'}
+          className='flex  gap-4  items-center text-sm lg:text-base  px-4 py-2 justify-center border-2 border-border-section bg-section-background lg:py-2 lg:px-6 rounded-lg'
+        >
+          Regresar{' '}
+          <ArrowLeftCircle
+            style={{
+              color: categoryData.color,
+            }}
+          />
+        </Link>
+      </div>
+
       {categoryData?.articles?.map((article: PostCardProps) => {
         const { id, title, cover, date, description, color, slug } = article
         const post = {
@@ -71,6 +94,7 @@ const CategoryPage = () => {
           </div>
         )
       })}
+      <Footer />
     </div>
   )
 }

@@ -1,3 +1,4 @@
+import { Footer } from '@/common/components/ui'
 import { BestPosts } from './components/BestPosts'
 import { CategoryGallery } from './components/CategoryGallery'
 
@@ -17,6 +18,7 @@ function BlogPage() {
         Post Recientes
       </p>
       <BestPosts />
+      <Footer />
     </main>
   )
 }
