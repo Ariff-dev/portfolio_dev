@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { marked } from 'marked'
 import { Footer } from '@/common/components/ui'
+import Link from 'next/link'
+import { ArrowLeftCircle } from 'iconoir-react'
 
 const PostPage = () => {
   const { slug } = useParams()
@@ -40,6 +42,12 @@ const PostPage = () => {
 
   return (
     <div className='mt-4 flex flex-col gap-4'>
+      <Link
+        href={'/blog'}
+        className='flex  gap-4  items-center text-sm lg:text-base  px-4 py-2 justify-center border-2 border-border-section bg-section-background lg:py-2 lg:px-6 rounded-lg'
+      >
+        Regresar <ArrowLeftCircle style={{ color: post.color }} />
+      </Link>
       <div>
         <Image
           src={post.cover.url}
