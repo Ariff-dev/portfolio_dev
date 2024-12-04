@@ -1,4 +1,5 @@
 'use client'
+
 import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
@@ -7,9 +8,21 @@ import { Footer } from '@/common/components/ui'
 import Link from 'next/link'
 import { ArrowLeftCircle } from 'iconoir-react'
 
+interface Post {
+  id: number
+  slug: string
+  title: string
+  article: string
+  color: string
+  cover: {
+    url: string
+    name: string
+  }
+}
+
 const PostPage = () => {
   const { slug } = useParams()
-  const [post, setPost] = useState<any>(null)
+  const [post, setPost] = useState<Post | null>(null)
 
   useEffect(() => {
     if (slug) {
@@ -29,7 +42,14 @@ const PostPage = () => {
         )
 
         const data = await response.json()
-        setPost(data.data[0])
+        const fetchedPost = data.data[0]
+
+        // Validar los datos antes de asignarlos al estado
+        if (fetchedPost && isValidPost(fetchedPost)) {
+          setPost(fetchedPost)
+        } else {
+          console.error('Invalid post data:', fetchedPost)
+        }
       }
 
       fetchPost()
@@ -57,13 +77,31 @@ const PostPage = () => {
           objectFit='cover'
         />
       </div>
-      {/* Renderizamos el contenido convertido a HTML */}
       <div
         className='post-content prose prose-lg mx-auto prose-h1:text-white prose-p:text-primary-text-color'
         dangerouslySetInnerHTML={{ __html: articleHtml }}
       />
       <Footer />
     </div>
+  )
+}
+
+const isValidPost = (post: unknown): post is Post => {
+  if (typeof post !== 'object' || post === null) return false
+  const { id, slug, title, article, color, cover } = post as Record<
+    string,
+    unknown
+  >
+  return (
+    typeof id === 'number' &&
+    typeof slug === 'string' &&
+    typeof title === 'string' &&
+    typeof article === 'string' &&
+    typeof color === 'string' &&
+    typeof cover === 'object' &&
+    cover !== null &&
+    typeof (cover as Record<string, unknown>).url === 'string' &&
+    typeof (cover as Record<string, unknown>).name === 'string'
   )
 }
 
