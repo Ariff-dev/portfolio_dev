@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { CategoryCardProps } from '../interfaces'
 import { CategoryCard } from './ui/CategoryCard'
+import { Spinner } from './ui/Spinner'
 
 export const CategoryGallery = () => {
   const [categories, setCategories] = useState<CategoryCardProps[]>([])
@@ -28,19 +29,24 @@ export const CategoryGallery = () => {
         }
 
         const categoriesData = await response.json()
-        setCategories(categoriesData.data)
-      } catch (error: any) {
-        setError(error.message || 'Error fetching categories')
+        const validCategories = categoriesData.data.filter(isValidCategory)
+        setCategories(validCategories)
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          setError(error.message || 'Error fetching categories')
+        } else {
+          setError('Unexpected error occurred')
+        }
       } finally {
         setLoading(false)
       }
     }
 
     fetchCategories()
-  }, []) // El array vacío [] asegura que solo se ejecute una vez al montar el componente
+  }, [])
 
   if (loading) {
-    return <div>Loading...</div> // Puedes personalizar esto con un spinner o algo más elegante
+    return <Spinner />
   }
 
   if (error) {
@@ -53,7 +59,7 @@ export const CategoryGallery = () => {
         const categoryProps = {
           id,
           name,
-          image: image?.url, // Accedemos a `image.url` de forma segura
+          image: image?.url,
           color,
           slug,
         }
@@ -61,5 +67,16 @@ export const CategoryGallery = () => {
         return <CategoryCard key={id} {...categoryProps} />
       })}
     </div>
+  )
+}
+
+const isValidCategory = (category: any): category is CategoryCardProps => {
+  return (
+    typeof category.id === 'number' &&
+    typeof category.name === 'string' &&
+    typeof category.color === 'string' &&
+    typeof category.slug === 'string' &&
+    category.image &&
+    typeof category.image.url === 'string'
   )
 }

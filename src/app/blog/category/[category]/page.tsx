@@ -36,8 +36,8 @@ const CategoryPage = () => {
           const data = await response.json()
           setCategoryData(data.data[0]) // Asumimos que la categoría es la primera en la respuesta
           setIsLoading(false)
-        } catch (err) {
-          setError(`Error al cargar los datos de la categoría. ${err} `)
+        } catch {
+          setError(`Error al cargar los datos de la categoría. `)
           setIsLoading(false)
         }
       }
