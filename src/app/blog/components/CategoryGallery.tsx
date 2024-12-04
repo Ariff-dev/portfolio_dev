@@ -69,13 +69,27 @@ export const CategoryGallery = () => {
   )
 }
 
-const isValidCategory = (category: any): category is CategoryCardProps => {
-  return (
-    typeof category.id === 'number' &&
-    typeof category.name === 'string' &&
-    typeof category.color === 'string' &&
-    typeof category.slug === 'string' &&
-    category.image &&
-    typeof category.image.url === 'string'
-  )
+const isValidCategory = (category: unknown): category is CategoryCardProps => {
+  if (
+    typeof category === 'object' &&
+    category !== null &&
+    'id' in category &&
+    'name' in category &&
+    'color' in category &&
+    'slug' in category &&
+    'image' in category
+  ) {
+    const { id, name, color, slug, image } = category as Record<string, unknown>
+    return (
+      typeof id === 'number' &&
+      typeof name === 'string' &&
+      typeof color === 'string' &&
+      typeof slug === 'string' &&
+      typeof image === 'object' &&
+      image !== null &&
+      'url' in image &&
+      typeof (image as Record<string, unknown>).url === 'string'
+    )
+  }
+  return false
 }

@@ -2,101 +2,107 @@
 
 import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { PostCard } from '../../components/ui/PostCard'
-import { PostCardProps } from '../../interfaces' // Asegúrate de tener estas interfaces correctamente definidas
-import { ArrowLeftCircle } from 'iconoir-react'
-import Link from 'next/link'
+import Image from 'next/image'
+import { marked } from 'marked'
 import { Footer } from '@/common/components/ui'
+import Link from 'next/link'
+import { ArrowLeftCircle } from 'iconoir-react'
 
-const CategoryPage = () => {
-  const { category } = useParams() // Accedemos al slug de la categoría desde la URL
-  const [categoryData, setCategoryData] = useState<CategoryData | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+interface Post {
+  id: number
+  slug: string
+  title: string
+  article: string
+  color: string
+  cover: {
+    url: string
+    name: string
+  }
+}
+
+const PostPage = () => {
+  const { slug } = useParams()
+  const [post, setPost] = useState<Post | null>(null)
 
   useEffect(() => {
-    if (category) {
-      const fetchCategory = async () => {
+    if (slug) {
+      const fetchPost = async () => {
         const URL = `${process.env.NEXT_PUBLIC_URL}`
         const token = `${process.env.NEXT_PUBLIC_TOKEN}`
 
-        try {
-          // Hacemos la solicitud para obtener la categoría con sus posts relacionados
-          const response = await fetch(
-            `${URL}/api/categories?filters[slug]=${category}&populate=articles.cover`, // Aquí populamos también la imagen del artículo
-            {
-              method: 'GET',
-              headers: {
-                Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json',
-              },
-            }
-          )
+        const response = await fetch(
+          `${URL}/api/articles?filters[slug]=${slug}&populate=*`,
+          {
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+          }
+        )
 
-          const data = await response.json()
-          setCategoryData(data.data[0]) // Asumimos que la categoría es la primera en la respuesta
-          setIsLoading(false)
-        } catch {
-          setError(`Error al cargar los datos de la categoría. `)
-          setIsLoading(false)
+        const data = await response.json()
+        const fetchedPost = data.data[0]
+
+        // Validar los datos antes de asignarlos al estado
+        if (fetchedPost && isValidPost(fetchedPost)) {
+          setPost(fetchedPost)
+        } else {
+          console.error('Invalid post data:', fetchedPost)
         }
       }
 
-      fetchCategory()
+      fetchPost()
     }
-  }, [category])
+  }, [slug])
 
-  if (isLoading) {
-    return <div>Loading...</div>
-  }
-  console.log(categoryData)
-  if (error) {
-    return <div>{error}</div>
-  }
+  if (!post) return <div>Loading...</div>
+
+  const articleHtml = marked(post.article)
 
   return (
-    <div className='flex flex-col gap-4 mt-4'>
-      <div className='flex items-center justify-between'>
-        <h1
-          className={` lg:text-2xl text-xl font-bold`}
-          style={{ color: categoryData.color }}
-        >
-          {categoryData.name}
-        </h1>
-        <Link
-          href={'/blog'}
-          className='flex  gap-4  items-center text-sm lg:text-base  px-4 py-2 justify-center border-2 border-border-section bg-section-background lg:py-2 lg:px-6 rounded-lg'
-        >
-          Regresar{' '}
-          <ArrowLeftCircle
-            style={{
-              color: categoryData.color,
-            }}
-          />
-        </Link>
+    <div className='mt-4 flex flex-col gap-4'>
+      <Link
+        href={'/blog'}
+        className='flex  gap-4  items-center text-sm lg:text-base  px-4 py-2 justify-center border-2 border-border-section bg-section-background lg:py-2 lg:px-6 rounded-lg'
+      >
+        Regresar <ArrowLeftCircle style={{ color: post.color }} />
+      </Link>
+      <div>
+        <Image
+          src={post.cover.url}
+          alt={post.cover.name}
+          width={500}
+          height={300}
+          objectFit='cover'
+        />
       </div>
-
-      {categoryData?.articles?.map((article: PostCardProps) => {
-        const { id, title, cover, date, description, color, slug } = article
-        const post = {
-          id,
-          title,
-          cover,
-          date,
-          description,
-          color,
-          slug,
-        }
-
-        return (
-          <div key={slug}>
-            <PostCard {...post} category={categoryData} />
-          </div>
-        )
-      })}
+      <div
+        className='post-content prose prose-lg mx-auto prose-h1:text-white prose-p:text-primary-text-color'
+        dangerouslySetInnerHTML={{ __html: articleHtml }}
+      />
       <Footer />
     </div>
   )
 }
 
-export default CategoryPage
+const isValidPost = (post: unknown): post is Post => {
+  if (typeof post !== 'object' || post === null) return false
+  const { id, slug, title, article, color, cover } = post as Record<
+    string,
+    unknown
+  >
+  return (
+    typeof id === 'number' &&
+    typeof slug === 'string' &&
+    typeof title === 'string' &&
+    typeof article === 'string' &&
+    typeof color === 'string' &&
+    typeof cover === 'object' &&
+    cover !== null &&
+    typeof (cover as Record<string, unknown>).url === 'string' &&
+    typeof (cover as Record<string, unknown>).name === 'string'
+  )
+}
+
+export default PostPage
