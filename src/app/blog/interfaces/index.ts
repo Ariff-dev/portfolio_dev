@@ -21,7 +21,7 @@ export interface ImageData {
 export interface CategoryCardProps {
   id: number
   name: string
-  image: ImageData
+  image: string
   color: string
   slug: string
 }

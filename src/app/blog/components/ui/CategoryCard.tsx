@@ -16,7 +16,7 @@ export const CategoryCard = ({
       className='relative w-full h-32 border-2 border-border-section rounded-lg'
     >
       <Image
-        src={image}
+        src={`${image}`}
         alt={name}
         layout='fill'
         objectFit='cover'
