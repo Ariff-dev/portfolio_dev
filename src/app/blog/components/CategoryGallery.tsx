@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react'
 import { CategoryCardProps } from '../interfaces'
 import { CategoryCard } from './ui/CategoryCard'
-import { Spinner } from './ui/Spinner'
 
 export const CategoryGallery = () => {
   const [categories, setCategories] = useState<CategoryCardProps[]>([])
@@ -46,7 +45,7 @@ export const CategoryGallery = () => {
   }, [])
 
   if (loading) {
-    return <Spinner />
+    return <div>Cargando...</div>
   }
 
   if (error) {
