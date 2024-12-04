@@ -58,7 +58,7 @@ export const CategoryGallery = () => {
         const categoryProps = {
           id,
           name,
-          image: image?.url,
+          image,
           color,
           slug,
         }

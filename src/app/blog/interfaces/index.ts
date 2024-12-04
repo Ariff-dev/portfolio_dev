@@ -21,7 +21,7 @@ export interface ImageData {
 export interface CategoryCardProps {
   id: number
   name: string
-  image: string
+  image: { url: string } // Cambia de `string` a un objeto con `url`
   color: string
   slug: string
 }
