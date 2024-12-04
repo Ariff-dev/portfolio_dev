@@ -1,19 +1,18 @@
 // Define un tipo para los elementos del array
 interface TimelineItem {
-  id: string // O el tipo correspondiente a `id`
+  id: number // Cambiar de string a number
   temporality: string
-  title: string
+  title: JSX.Element // Permitir JSX.Element en lugar de string
   description: string
 }
 
 interface TimelineProps {
-  data: TimelineItem[] // El prop 'data' es un array de objetos tipo 'TimelineItem'
+  data: TimelineItem[]
 }
 
 export const Timeline = ({ data }: TimelineProps) => {
   return (
     <ol className='ml-4 flex flex-col gap-4 border-l border-neutral-300 dark:border-neutral-500'>
-      {/* Primer evento */}
       {data.map((item) => (
         <li key={item.id}>
           <div className='flex items-center pt-3'>
@@ -23,7 +22,7 @@ export const Timeline = ({ data }: TimelineProps) => {
             </p>
           </div>
           <div className='mb-6 ml-4 mt-2'>
-            <h4 className='mb-1.5 text-base font-semibold '>{item.title}</h4>
+            <h4 className='mb-1.5 text-base font-semibold'>{item.title}</h4>
             <p className='mb-3 text-xs text-primary-text-color'>
               {item.description}
             </p>
