@@ -5,18 +5,16 @@ import { experienceData, educationData, funnyFacts, skills } from './data'
 import { CarouselLanguages, DownLoadCV, FormData, Timeline } from './components'
 import { Footer } from '@/common/components/ui'
 
+import Yo from '../../assets/yop.jpg'
+
 export default function Home() {
   return (
     <main className='mt-4 flex flex-col gap-4'>
       <section className='bg-section-background rounded-lg border-2 border-border-section p-4 flex flex-col lg:flex-row gap-4 lg:justify-center lg:items-center'>
         <div className='lg:w-2/5 lg:p-10'>
           <Image
-            src={
-              'https://images.unsplash.com/photo-1666594351951-43f58d69c93f?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-            }
-            width={300}
-            height={300}
-            className='w-full h-[300px] lg:h-[600px] object-cover object-top border-2 border-blue-neon-contrast rounded-3xl'
+            src={Yo}
+            className='w-full h-[400px] lg:h-[600px] object-cover border-2 border-border-section rounded-3xl object-center'
             alt='Holi'
           />
         </div>
